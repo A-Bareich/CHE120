@@ -1,23 +1,46 @@
+"""
+Andrea Bareich ID: 20972966 Initials: AB
+
+"""
+"""
+What we are changing
+- add levels or lives
+change characters
+- player: spaceship
+- baddie: asteroides and aliens
+- lives: gas or food <-
+background
+"""
 import pygame, random, sys
 from pygame.locals import *
 
-WINDOWWIDTH = 600
-WINDOWHEIGHT = 600
-TEXTCOLOR = (0, 0, 0)
-BACKGROUNDCOLOR = (255, 255, 255)
-FPS = 60
-BADDIEMINSIZE = 10
-BADDIEMAXSIZE = 40
-BADDIEMINSPEED = 1
-BADDIEMAXSPEED = 8
-ADDNEWBADDIERATE = 6
-PLAYERMOVERATE = 5
 
-def terminate():
-    pygame.quit()
-    sys.exit()
+WINDOWWIDTH = 600 #1000
+WINDOWHEIGHT = 600#700 fits screen better gives user more space to play
+TEXTCOLOR = (0, 0, 0) #colour of text in RBG = black
+BACKGROUNDCOLOR = (255, 255, 255) # clolour of background in RGB = white
+FPS = 60 # frame rate - 60frames per second
+BADDIEMINSIZE = 10#minimum size for the bad guy
+BADDIEMAXSIZE = 40#max size for bad guy
+BADDIEMINSPEED = 1#min speed of bad guy
+BADDIEMAXSPEED = 8#max speed of bad guy
+ADDNEWBADDIERATE = 6#8 #amount of baddies higher numer means less baddies
+PLAYERMOVERATE = 5#rate the player moves
 
-def waitForPlayerToPressKey():
+def terminate(): #when the game ends
+    pygame.quit() # quit the game
+    sys.exit() #system exits
+
+def waitForPlayerToPressKey(): #
+    while True:#while we are waiting for the player to hit a key
+        for event in pygame.event.get(): 
+            if event.type == QUIT:
+                terminate()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE: # Pressing ESC quits.
+                    terminate()
+                return
+def getLevel():
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -25,6 +48,23 @@ def waitForPlayerToPressKey():
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE: # Pressing ESC quits.
                     terminate()
+                if event.key == K_1:
+                    BADDIEMINSIZE = 20#minimum size for the bad guy
+                    BADDIEMAXSIZE = 40#max size for bad guy
+                    BADDIEMINSPEED = 1#min speed of bad guy
+                    BADDIEMAXSPEED = 5#max speed of bad guy
+                    ADDNEWBADDIERATE = 10#8 #amount of baddies higher numer means less baddies
+
+                elif event.key == K_2:
+                    BADDIEMINSIZE = 5#minimum size for the bad guy
+                    BADDIEMAXSIZE = 20#max size for bad guy
+                    BADDIEMINSPEED = 3#min speed of bad guy
+                    BADDIEMAXSPEED = 5#max speed of bad guy
+                elif event.key == K_3:
+                    BADDIEMINSIZE = 20#minimum size for the bad guy
+                    BADDIEMAXSIZE = 40#max size for bad guy
+                    BADDIEMINSPEED = 5#min speed of bad guy
+                    BADDIEMAXSPEED = 10#max speed of bad guy 
                 return
 
 def playerHasHitBaddie(playerRect, baddies):
@@ -57,13 +97,21 @@ pygame.mixer.music.load('background.mid')
 playerImage = pygame.image.load('player.png')
 playerRect = playerImage.get_rect()
 baddieImage = pygame.image.load('baddie.png')
+baddieImage2 = pygame.image.load('baddie.png')
+
 
 # Show the "Start" screen.
 windowSurface.fill(BACKGROUNDCOLOR)
 drawText('Dodger', font, windowSurface, (WINDOWWIDTH / 3), (WINDOWHEIGHT / 3))
-drawText('Press a key to start.', font, windowSurface, (WINDOWWIDTH / 3) - 30, (WINDOWHEIGHT / 3) + 50)
+drawText('Press 1 to play level 1', font, windowSurface, (WINDOWWIDTH / 3) - 30, (WINDOWHEIGHT / 3) + 50)
+drawText('Press 2 to play level 2', font, windowSurface, (WINDOWWIDTH / 3) - 30, (WINDOWHEIGHT / 3) + 70)
+drawText('Press 3 to play level 3', font, windowSurface, (WINDOWWIDTH / 3) - 30, (WINDOWHEIGHT / 3) + 90)
+
+#drawText('Press a key to start.', font, windowSurface, (WINDOWWIDTH / 3) - 30, (WINDOWHEIGHT / 3) + 50)
 pygame.display.update()
-waitForPlayerToPressKey()
+getLevel()
+
+#waitForPlayerToPressKey()
 
 topScore = 0
 while True:
@@ -129,10 +177,11 @@ while True:
             baddieAddCounter += 1
         if baddieAddCounter == ADDNEWBADDIERATE:
             baddieAddCounter = 0
+            randomCharacter = random.choice([baddieImage,baddieImage2])
             baddieSize = random.randint(BADDIEMINSIZE, BADDIEMAXSIZE)
             newBaddie = {'rect': pygame.Rect(random.randint(0, WINDOWWIDTH - baddieSize), 0 - baddieSize, baddieSize, baddieSize),
                         'speed': random.randint(BADDIEMINSPEED, BADDIEMAXSPEED),
-                        'surface':pygame.transform.scale(baddieImage, (baddieSize, baddieSize)),
+                        'surface':pygame.transform.scale(randomCharacter, (baddieSize, baddieSize)),
                         }
 
             baddies.append(newBaddie)
