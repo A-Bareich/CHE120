@@ -86,7 +86,7 @@ def drawText(text, font, surface, x, y):
 pygame.init()                                                           #initialize pygame -IR
 mainClock = pygame.time.Clock()                                         #create a clock object with pygame clock fucntion -IR
 windowSurface = pygame.display.set_mode((WINDOWWIDTH, WINDOWHEIGHT))    #create the game screen -IR
-pygame.display.set_caption('Dodger')                                    #show the word dodger on the screen -IR
+pygame.display.set_caption('Dodger')                                    # creates caption for the display window -IR
 pygame.mouse.set_visible(False)                                         #set it so you can not see the mouse cursor in the game screen -IR
 
 # Set up the fonts.
