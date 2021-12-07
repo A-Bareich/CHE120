@@ -1,7 +1,7 @@
 """
-Andrea Bareich  ID: 20972966 Initials: AB
-Faiven Anteneh  ID: 20949945 Initials: FA
-Isabella Ristic ID: 20941943 Initials: IR
+Andrea Bareich   ID: 20972966  Initials: AB   GitHub Username: A-Bareich
+Faiven Anteneh   ID: 20949945  Initials: FA
+Isabella Ristic  ID: 20941943  Initials: IR
 """
 """
 What we are changing
@@ -170,6 +170,7 @@ while True:
 
     while True:     #The game loop runs while the game part is playing -FA
         score += 1  #Increase score by 1 -FA
+        
 
         for event in pygame.event.get():    #for an event in the game (key pressed, game quit etc) -IR
             if event.type == QUIT:          #if the event type is quit -IR
